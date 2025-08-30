@@ -83,7 +83,7 @@ public class DocumentoDao {
 		}
 	}
 
-	public List<DocumentoMaestro> ReadAll() {
+	public List<DocumentoMaestro> ReadAll() throws SQLException {
 		List<DocumentoMaestro> lista = new ArrayList<>();
 		String sql = "SELECT * FROM tbl_documento_maestro";
 
@@ -101,11 +101,7 @@ public class DocumentoDao {
 				doc.setExt(rs.getString("ext"));
 				lista.add(doc);
 			}
-
-		} catch (SQLException e) {
-			System.out.println("Error al listar documentos: " + e.getMessage());
 		}
-
 		return lista;
 	}
 }

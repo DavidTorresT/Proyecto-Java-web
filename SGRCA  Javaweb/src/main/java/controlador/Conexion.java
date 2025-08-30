@@ -4,6 +4,7 @@ package controlador;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Conexion {
 
@@ -36,6 +37,11 @@ public class Conexion {
         return conn;
         
    }
+    
+    public static Statement createStament() {
+		return null;
+		
+	}
     
     
 }

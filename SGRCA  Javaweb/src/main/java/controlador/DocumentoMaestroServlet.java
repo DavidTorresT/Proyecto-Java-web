@@ -1,5 +1,6 @@
 package controlador;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -194,7 +195,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
     	
         String idRead = request.getParameter("id");
 
-        if (idRead == null && idRead.isEmpty()) {
+        if (idRead == null || idRead.isEmpty()) {
         	
             session.setAttribute("mensaje", "Debe ingresar un ID para consultar");
             session.setAttribute("tipo", "error");
@@ -221,14 +222,11 @@ public class DocumentoMaestroServlet extends HttpServlet {
             throws IOException, ServletException, SQLException {
 
         List<DocumentoMaestro> lista = dao.ReadAll();
-
-        if (lista == null || lista.isEmpty()) {
-            session.setAttribute("mensaje", "No hay documentos para mostrar.");
-            response.sendRedirect("index.jsp");
-        } else {
-            request.setAttribute("lista", lista);
-            request.getRequestDispatcher("tabla.jsp").forward(request, response);
-        }
+        
+        request.setAttribute("documentos", lista);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("tabla.jsp");
+        dispatcher.forward(request, response);
     }
 
     // Metodo de validacion
