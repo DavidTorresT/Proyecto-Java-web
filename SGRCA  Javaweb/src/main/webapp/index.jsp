@@ -100,10 +100,10 @@ input[type="submit"]:hover {
 	 String mensaje = (String) session.getAttribute("mensaje");
 		String tipo = (String) session.getAttribute("tipo");
 
-		DocumentoMaestro doc = (DocumentoMaestro) session.getAttribute("Documentos");
-
 		session.removeAttribute("mensaje");
 		session.removeAttribute("tipo");
+		
+		DocumentoMaestro doc = (DocumentoMaestro) session.getAttribute("Documentos");
 		%>
 
 		<%
@@ -120,21 +120,22 @@ input[type="submit"]:hover {
 
 		<form action="DocumentoMaestroServlet" method="POST">
 
-			<label for="codigo">Código:</label><br> <input type="text"
-				name="codigo" id="codigo"
+			<label for="codigo">Código:</label><br> 
+			<input type="text" name="codigo" id="codigo" maxlength="45"
 				value="<%=(doc != null) ? doc.getCodigo() : ""%>"><br>
-			<br> <label for="nombre">Nombre:</label><br> <input
-				type="text" name="nombre" id="nombre"
+			<br> <label for="nombre">Nombre:</label><br> 
+			<input type="text" name="nombre" id="nombre" maxlength="45"
 				value="<%=(doc != null) ? doc.getNombre() : ""%>"><br>
-			<br> <label for="tamanio">Tamaño:</label><br> <input
-				type="text" name="tamanio" id="tamanio"
+			<br> <label for="tamanio">Tamaño:</label><br> 
+			<input type="text" name="tamanio" id="tamanio" maxlength="45"
 				value="<%=(doc != null) ? doc.getTamanio() : ""%>"><br>
-			<br> <label for="ruta">Ruta:</label><br> <input type="text"
-				name="ruta" id="ruta"
+			<br> <label for="ruta">Ruta:</label><br> 
+			<input type="text" name="ruta" id="ruta" maxlength="200"
 				value="<%=(doc != null) ? doc.getRuta() : ""%>"><br>
-			<br> <label for="ext">Extensión:</label><br> <input
-				type="text" name="ext" id="ext"
+			<br> <label for="ext">Extensión:</label><br> 
+			<input type="text" name="ext" id="ext" maxlength="10"
 				value="<%=(doc != null) ? doc.getExt() : ""%>"><br> <br>
+				
 			<input type="submit" name="accion" value="Registrar"><br>
 
 			<label for="id">ID Maestro:</label><br> <input type="number"

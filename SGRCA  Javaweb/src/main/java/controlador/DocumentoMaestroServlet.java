@@ -69,7 +69,6 @@ public class DocumentoMaestroServlet extends HttpServlet {
     }
 
     // Metodos crud
-
     private void registrarDocumento(HttpServletRequest request, HttpServletResponse response, HttpSession session,DocumentoDao dao)
             throws IOException, SQLException {
 
@@ -129,7 +128,6 @@ public class DocumentoMaestroServlet extends HttpServlet {
             throws IOException, SQLException {
 
         String idUpdate = request.getParameter("id");
-        StringBuilder errores = new StringBuilder();
 
         if (idUpdate == null || idUpdate.isEmpty()) {
         	
@@ -227,10 +225,5 @@ public class DocumentoMaestroServlet extends HttpServlet {
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("tabla.jsp");
         dispatcher.forward(request, response);
-    }
-
-    // Metodo de validacion
-    private boolean isNullOrEmpty(String value) {
-        return value == null || value.trim().isEmpty();
     }
 }
