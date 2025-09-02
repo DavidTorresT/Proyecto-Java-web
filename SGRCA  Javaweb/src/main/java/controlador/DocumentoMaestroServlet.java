@@ -1,5 +1,6 @@
 package controlador;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,6 +19,9 @@ import java.util.List;
 public class DocumentoMaestroServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     DocumentoDao dao = new DocumentoDao();
+    GenerarCorreo correo = new GenerarCorreo();
+    
+    String mensaje= "";
 
     public DocumentoMaestroServlet() {
         super();
@@ -32,6 +36,8 @@ public class DocumentoMaestroServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	
+    	
 
         String accion = request.getParameter("accion");
         HttpSession session = request.getSession();
@@ -71,7 +77,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
     // Metodos crud
     private void registrarDocumento(HttpServletRequest request, HttpServletResponse response, HttpSession session,DocumentoDao dao)
             throws IOException, SQLException {
-
+    	
         String codigo = request.getParameter("codigo");
         String nombre = request.getParameter("nombre");
         String tamanio = request.getParameter("tamanio");
@@ -114,12 +120,23 @@ public class DocumentoMaestroServlet extends HttpServlet {
         boolean resultCreate = dao.Create(crear);
 
         if (resultCreate) {
-            session.setAttribute("mensaje", "Documento agregado con éxito.");
+            String msg = "Documento agregado con éxito."; 
+            session.setAttribute("mensaje", msg);
             session.setAttribute("tipo", "exito");
+           
+            // Correo de confirmacion de la accion
+            try {
+            	 correo.EnviarCorreo("Accion exitosa", msg);
+			} catch (MessagingException e) {
+				session.setAttribute("mensaje", "El documento se creo, pero ocurrio un problema al enviar el correo");
+				session.setAttribute("tipo", "error");
+			}
+            
         } else {
-            session.setAttribute("mensaje", "Error al agregar el documento.");
+            session.setAttribute("mensaje", "Error al agregar el documento."); 
             session.setAttribute("tipo", "error");
         }
+        
 
         response.sendRedirect("index.jsp");
     }
@@ -183,6 +200,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
             session.setAttribute("mensaje", "Error al eliminar el documento.");
             session.setAttribute("tipo", "error");
         }
+        
 
         response.sendRedirect("index.jsp");
     }
@@ -215,7 +233,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
 
         response.sendRedirect("index.jsp");
     }
-
+    
     private void verTodosDocumentos(HttpServletRequest request, HttpServletResponse response, HttpSession session, DocumentoDao dao)
             throws IOException, ServletException, SQLException {
 

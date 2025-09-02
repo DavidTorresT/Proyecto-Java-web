@@ -39,8 +39,7 @@ th {
 		</tr>
 
 		<% 
-       List<DocumentoMaestro> documentos = (List<DocumentoMaestro>) request.getAttribute("documentos");
-       
+       List<DocumentoMaestro> documentos = (List<DocumentoMaestro>) request.getAttribute("documentos"); 
        if(documentos != null) {
     	   
     	   for (DocumentoMaestro doc : documentos) {
