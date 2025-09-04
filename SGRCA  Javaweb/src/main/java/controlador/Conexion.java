@@ -38,10 +38,5 @@ public class Conexion {
         
    }
     
-    public static Statement createStament() {
-		return null;
-		
-	}
-    
     
 }

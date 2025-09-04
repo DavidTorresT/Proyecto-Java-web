@@ -10,8 +10,6 @@ public class DocumentoMaestro {
 	private int id;
 	
 	
-	
-	
 	public DocumentoMaestro(String codigo, String nombre, String tamanio, String ruta, String ext) {
 		super();
 		this.codigo = codigo;

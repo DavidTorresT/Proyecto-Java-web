@@ -37,7 +37,6 @@ public class DocumentoMaestroServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
-    	
 
         String accion = request.getParameter("accion");
         HttpSession session = request.getSession();
@@ -126,10 +125,9 @@ public class DocumentoMaestroServlet extends HttpServlet {
            
             // Correo de confirmacion de la accion
             try {
-            	 correo.EnviarCorreo("Accion exitosa", msg);
+            	 correo.EnviarCorreo("Registro realizado", msg);
 			} catch (MessagingException e) {
-				session.setAttribute("mensaje", "El documento se creo, pero ocurrio un problema al enviar el correo");
-				session.setAttribute("tipo", "error");
+				System.out.println("Error: " + e.getMessage());
 			}
             
         } else {
@@ -155,7 +153,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
             return;
         }
 
-        DocumentoMaestro actualizar = new DocumentoMaestro(); // Debes setear atributos si es necesario
+        DocumentoMaestro actualizar = new DocumentoMaestro();
         
         actualizar.setId(Integer.parseInt(idUpdate));
         actualizar.setCodigo(request.getParameter("codigo"));
@@ -239,7 +237,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
 
         List<DocumentoMaestro> lista = dao.ReadAll();
         
-        request.setAttribute("documentos", lista);
+        request.setAttribute("listaDocumentos", lista);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("tabla.jsp");
         dispatcher.forward(request, response);

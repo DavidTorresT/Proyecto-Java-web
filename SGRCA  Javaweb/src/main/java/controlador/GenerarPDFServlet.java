@@ -42,7 +42,7 @@ public class GenerarPDFServlet extends HttpServlet {
 		
 		response.setContentType("application/pdf");
 		
-		response.setHeader("Content-Disposition", "attachment; filename=documento.pdf");
+		response.setHeader("Content-Disposition", "attachment; filename=Reporte.pdf");
 		
 		Document document = new Document();
 		
@@ -92,7 +92,7 @@ public class GenerarPDFServlet extends HttpServlet {
 			document.close();
 			
 		} catch (Exception e) {
-			throw new IOException(e.getMessage());
+			System.out.println("Error : " + e.getMessage());
 		}
 	}
 

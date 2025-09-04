@@ -39,20 +39,19 @@ th {
 		</tr>
 
 		<% 
-       List<DocumentoMaestro> documentos = (List<DocumentoMaestro>) request.getAttribute("documentos"); 
-       if(documentos != null) {
+       List<DocumentoMaestro> lista = (List<DocumentoMaestro>) request.getAttribute("listaDocumentos"); 
+       if(lista != null) {
     	   
-    	   for (DocumentoMaestro doc : documentos) {
+    	   for (DocumentoMaestro docMaestro : lista) {
     		  %>
 		<tr>
 
-			<td><%= doc.getId() %></td>
-			<td><%= doc.getCodigo() %></td>
-			<td><%= doc.getNombre() %></td>
-			<td><%= doc.getTamanio() %></td>
-			<td><%= doc.getRuta() %></td>
-			<td><%= doc.getExt() %></td>
-
+			<td type="hidden" id="id"><%= docMaestro.getId() %></td>
+			<td><%= docMaestro.getCodigo() %></td>
+			<td><%= docMaestro.getNombre() %></td>
+			<td><%= docMaestro.getTamanio() %></td>
+			<td><%= docMaestro.getRuta() %></td>
+			<td><%= docMaestro.getExt() %></td>
 		</tr>
 		<% 
     	   }
