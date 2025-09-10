@@ -80,6 +80,20 @@ input[type="submit"] {
 input[type="submit"]:hover {
 	background-color: #0056b3;
 }
+
+.btn-pdf{
+display: inline-block;
+padding: 10px 20px;
+background-color: #007BFF;
+color: white;
+text-decoration: none;
+border-radius: 5px;
+font-weight: bold;
+}
+
+.btn-pdf:hover {
+background-color: #0056b3
+}
 </style>
 </head>
 <body>
@@ -93,10 +107,9 @@ input[type="submit"]:hover {
 	 	out.print("<h2>No Conectado a MYSQL</h2>");
 	 }*/
      %>
-	
 
 	<div class="form-container">
-	 <% 
+		<% 
 	 String mensaje = (String) session.getAttribute("mensaje");
 		String tipo = (String) session.getAttribute("tipo");
 
@@ -122,63 +135,40 @@ input[type="submit"]:hover {
 
 			<label for="codigo">Código:</label><br> 
 			<input type="text" name="codigo" id="codigo" maxlength="45"
-				value="<%=(doc != null) ? doc.getCodigo() : ""%>"><br>
-			<br> <label for="nombre">Nombre:</label><br> 
+				value="<%=(doc != null) ? doc.getCodigo() : ""%>"><br><br> 
+			<label for="nombre">Nombre:</label><br> 
 			<input type="text" name="nombre" id="nombre" maxlength="45"
-				value="<%=(doc != null) ? doc.getNombre() : ""%>"><br>
-			<br> <label for="tamanio">Tamaño:</label><br> 
-			<input type="text" name="tamanio" id="tamanio" maxlength="45"
+				value="<%=(doc != null) ? doc.getNombre() : ""%>"><br><br> 
+			<label for="tamanio">Tamaño:</label><br> 
+			<input
+				type="text" name="tamanio" id="tamanio" maxlength="45"
 				value="<%=(doc != null) ? doc.getTamanio() : ""%>"><br>
-			<br> <label for="ruta">Ruta:</label><br> 
-			<input type="text" name="ruta" id="ruta" maxlength="200"
-				value="<%=(doc != null) ? doc.getRuta() : ""%>"><br>
-			<br> <label for="ext">Extensión:</label><br> 
-			<input type="text" name="ext" id="ext" maxlength="10"
-				value="<%=(doc != null) ? doc.getExt() : ""%>"><br> <br>
-				
-			<input type="submit" name="accion" value="Registrar"><br>
-
-			<label for="id">ID Maestro:</label><br> <input type="number"
-				name="id" value="<%=(doc != null) ? doc.getId() : ""%>"><br>
 			<br> 
-			<input type="submit" name="accion" value="Eliminar">
-			<input type="submit" name="accion" value="Actualizar"> 
-			<input type="submit" name="accion" value="Consultar">
-			<input type="submit" name="accion" value="Ver todos">
+			<label for="ruta">Ruta:</label><br> 
+			<input type="text" name="ruta" id="ruta" maxlength="200"
+				value="<%=(doc != null) ? doc.getRuta() : ""%>"><br><br>
+			<label for="ext">Extensión:</label><br> 
+			<input type="text" name="ext" id="ext" maxlength="10"
+				value="<%=(doc != null) ? doc.getExt() : ""%>"><br><br>
 
-            <a href="docMaestro.jsp">Maestros</a>
+			<input type="submit" name="accion" value="📝 Registrar"><br>
+
+			<label for="id">ID Maestro:</label><br> 
+			<input type="number" name="id" value="<%=(doc != null) ? doc.getId() : ""%>"><br><br> 
+			<input type="submit" name="accion" value="⛔ Eliminar">
+			<input type="submit" name="accion" value="🔄 Actualizar"> 
+			<input type="submit" name="accion" value="🔍 Consultar"> 
+			<input type="submit" name="accion" value="📋 Ver todos">
+			
 		</form>
-
-		<%-- <form name="frmMaestros" action="DocumentoMaestroServlet"  method="POST">
-
-        <label for="codigo">Codigo del documento:</label><br>
-        <input type="text" name="codigo" id="codigo" maxlength="45" value="${consultar.codigo}"><br><br>
-
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre" id="nombre" maxlength="45" value="${consultar.nombre}"><br><br>
-
-        <label for="tamanio">Tamaño del archivo:</label><br>
-        <input type="text" name="tamanio" id="tamanio" maxlength="45" value="${consultar.tamanio}"><br><br>
-
-        <label for="ruta">Ruta:</label><br>
-        <input type="text" name="ruta" id="ruta" maxlength="200" value="${consultar.ruta}"><br><br>
-
-        <label for="ext">Extension:</label><br>
-        <input type="text" name="ext" id="ext" maxlength="10" value="${consultar.ext}"><br><br>
-
-        <input type="submit" name="accion" value="Registrar">
-        <input type="reset" value="Limpiar"><br><br><br>
-
-
-        <label for="id">ID Maestro:</label><br>
-        <input type="number" name="id" value="id"><br><br>
-        <input type="submit" name="accion" value="eliminar">
-        <input type="submit" name="accion" value="actualizar">
-        <input type="submit" name="accion" value="consultar">
-        
-        </form>  --%>
+		
+		<form action="">
+		<a href="GenerarPDFServlet" class="btn-pdf" target="_blank">Generar reporte en PDF</a>
+		</form>
+		
 
 	</div>
+	
 
 	<%
 	Properties lector = new Properties();
@@ -198,6 +188,14 @@ input[type="submit"]:hover {
 	%>
 	<div>
 
+		<p>
+			Nombre:
+			<%=Nombre%></p>
+		<p>
+			Apellido:
+			<%=Apellido%></p>
+
+		
 	</div>
 
 

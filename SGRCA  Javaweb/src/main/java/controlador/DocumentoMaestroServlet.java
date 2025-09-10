@@ -30,7 +30,9 @@ public class DocumentoMaestroServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // No implementado aún
+    	
+        doPost(request, response);
+    	
     }
 
     @Override
@@ -43,34 +45,39 @@ public class DocumentoMaestroServlet extends HttpServlet {
 
         try {
             switch (accion) {
-                case "Registrar":
+                case "📝 Registrar":
                     registrarDocumento(request, response, session, dao);
                     break;
-                case "Actualizar":
+                case "🔄 Actualizar":
                     actualizarDocumento(request, response, session, dao);
                     break;
-                case "Eliminar":
+                case "⛔ Eliminar":
                     eliminarDocumento(request, response, session, dao);
                     break;
-                case "Consultar":
+                case "🔍 Consultar":
                     consultarDocumento(request, response, session, dao);
                     break;
-                case "Ver todos":
+                case "📋 Ver todos":
                     verTodosDocumentos(request, response, session, dao);
                     break;
+                case "tablaEliminar":
+                	tablaEliminar(request, response, session, dao);
+                	break;
+                case "tablaActualizar" :   
+                	tablaActualizar(request, response, session, dao);
+                	break;
                 default:
                     session.setAttribute("mensaje", "Acción no reconocida.");
                     session.setAttribute("tipo", "error");
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("docMaestro.jsp");
            }
         } catch (SQLException e) {
             e.printStackTrace();
             session.setAttribute("mensaje", "Error en base de datos: " + e.getMessage());
             session.setAttribute("tipo", "error");
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("docMaestro.jsp");
         }
 
-        doGet(request, response);
     }
 
     // Metodos crud
@@ -87,31 +94,31 @@ public class DocumentoMaestroServlet extends HttpServlet {
         	
         	session.setAttribute("mensaje", "El campo 'Código' es obligatorio.");
         	session.setAttribute("tipo", "error");
-        	response.sendRedirect("index.jsp");
+        	
             return;
         } else if (nombre == null || nombre.isEmpty()) {
         	
         	session.setAttribute("mensaje","El campo 'Nombre' es obligatorio." );
         	session.setAttribute("tipo", "error");
-        	response.sendRedirect("index.jsp");
+        	
             return;
         }  else if (tamanio == null || tamanio.isEmpty()) {
         	
         	session.setAttribute("mensaje","El campo 'Tamaño' es obligatorio." );
         	session.setAttribute("tipo", "error");
-        	response.sendRedirect("index.jsp");
+        	
             return;
         }  else if (ruta == null || ruta.isEmpty()) {
         	
         	session.setAttribute("mensaje","El campo 'Ruta' es obligatorio." );
         	session.setAttribute("tipo", "error");
-        	response.sendRedirect("index.jsp");
+        	
             return;
         } else if (ext == null || ext.isEmpty()) {
         	
         	session.setAttribute("mensaje","El campo 'Extensión' es obligatorio." );
         	session.setAttribute("tipo", "error");
-        	response.sendRedirect("index.jsp");
+        	
             return;
         }
         	
@@ -125,7 +132,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
            
             // Correo de confirmacion de la accion
             try {
-            	 correo.EnviarCorreo("Registro realizado", msg);
+            	 correo.EnviarCorreo("Se ha realizado un nuevo resgistro", crear);
 			} catch (MessagingException e) {
 				System.out.println("Error: " + e.getMessage());
 			}
@@ -136,7 +143,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
         }
         
 
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("docMaestro.jsp");
     }
 
     private void actualizarDocumento(HttpServletRequest request, HttpServletResponse response, HttpSession session, DocumentoDao dao)
@@ -149,7 +156,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
             session.setAttribute("mensaje", "Debe ingresar un ID para actualizar");
             session.setAttribute("tipo", "error");
             
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("docMaestro.jsp");
             return;
         }
 
@@ -163,18 +170,19 @@ public class DocumentoMaestroServlet extends HttpServlet {
         actualizar.setExt(request.getParameter("ext"));
         
         boolean resultUpdate = dao.Update(actualizar);
+        
 
         if (resultUpdate) {
             session.setAttribute("mensaje", "Documento actualizado correctamente.");
             session.setAttribute("tipo", "exito");
-            
             session.removeAttribute("Documentos");
+            
         } else {
             session.setAttribute("mensaje", "No se pudo actualizar el documento.");
             session.setAttribute("tipo", "error");
         }
 
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("docMaestro.jsp");
     }
 
     private void eliminarDocumento(HttpServletRequest request, HttpServletResponse response, HttpSession session, DocumentoDao dao)
@@ -213,7 +221,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
         	
             session.setAttribute("mensaje", "Debe ingresar un ID para consultar");
             session.setAttribute("tipo", "error");
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("docMaestro.jsp");
             return;
         }
         
@@ -225,11 +233,11 @@ public class DocumentoMaestroServlet extends HttpServlet {
             session.setAttribute("mensaje", "Documento encontrado.");
             session.setAttribute("tipo", "exito");
         } else {
-            session.setAttribute("mensaje", "No se encontró el documento con ID: " + id);
+            session.setAttribute("mensaje", "No se encontró el documento con ID: " + id + "🚨");
             session.setAttribute("tipo", "error");
         }
 
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("docMaestro.jsp");
     }
     
     private void verTodosDocumentos(HttpServletRequest request, HttpServletResponse response, HttpSession session, DocumentoDao dao)
@@ -242,4 +250,35 @@ public class DocumentoMaestroServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("tabla.jsp");
         dispatcher.forward(request, response);
     }
+    
+    private void tablaEliminar(HttpServletRequest request, HttpServletResponse response, HttpSession session, DocumentoDao dao)
+            throws IOException, SQLException {
+
+        String id = request.getParameter("id");
+
+        if (dao.Delete(id)) {
+            session.setAttribute("mensaje", "Documento eliminado con éxito.");
+            session.setAttribute("tipo", "exito");
+            
+        } else {
+            session.setAttribute("mensaje", "Error al eliminar el documento.");
+            session.setAttribute("tipo", "error");
+        }
+        
+        response.sendRedirect("DocumentoMaestroServlet?accion=📋 Ver todos");
+    }
+    
+    private void tablaActualizar(HttpServletRequest request, HttpServletResponse response, HttpSession session, DocumentoDao dao)
+            throws IOException, SQLException {
+
+    	int id = Integer.parseInt(request.getParameter("id"));
+        
+    	String accion = request.getParameter("accion");
+        
+        response.sendRedirect("tblDocMaeEditar.jsp");
+        DocumentoMaestro consultar = dao.Read(id);
+        session.setAttribute("Documentos", consultar);
+        
+		}
+         
 }
