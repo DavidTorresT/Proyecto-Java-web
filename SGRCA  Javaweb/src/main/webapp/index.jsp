@@ -9,28 +9,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Registro Maestros</title>
+<title>SGRCA</title>
 <style type="text/css">
-.mensaje {
-	padding: 10px;
-	margin-bottom: 15px;
-	font-weight: bold;
-	border-radius: 5px;
-	text-align: center;
-}
-
-.exito {
-	background-color: #d4edda;
-	color: #155724;
-	border: 1px solid #c3e6cb;
-}
-
-.error {
-	background-color: #f8d7da;
-	color: #721c24;
-	border: 1px solid #f5c6cb;
-}
-
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f8f9fa;
@@ -55,151 +35,18 @@ h2 {
 	max-width: 500px;
 }
 
-label {
-	font-weight: bold;
-}
-
-input[type="text"], input[type="number"] {
-	width: 95%;
-	padding: 8px;
-	margin-bottom: 15px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-input[type="submit"] {
-	padding: 10px 18px;
-	margin: 5px;
-	background-color: #007BFF;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-}
-
-input[type="submit"]:hover {
-	background-color: #0056b3;
-}
 </style>
 </head>
 <body>
 
-	<%
-	/* Connection test = Conexion.getConnection();
-	 
-	 if (test != null && !test.isClosed()){
-	 	out.print("<h2>Conectado a MYSQL con la forma 2</h2>");
-	 } else {
-	 	out.print("<h2>No Conectado a MYSQL</h2>");
-	 }*/
-     %>
+<div class="form-container">
+
+<h2>Sistema Gestion De Registro Calificado y Autoevaluacion</h2>
 	
+<a href="docMaestro.jsp"><img alt="Gestion de Documentos de Maestros" src="https://cdn-icons-png.flaticon.com/128/3396/3396255.png"></a>
+<a href=""></a>
 
-	<div class="form-container">
-	 <% 
-	 String mensaje = (String) session.getAttribute("mensaje");
-		String tipo = (String) session.getAttribute("tipo");
-
-		session.removeAttribute("mensaje");
-		session.removeAttribute("tipo");
-		
-		DocumentoMaestro doc = (DocumentoMaestro) session.getAttribute("Documentos");
-		%>
-
-		<%
-		if (mensaje != null && tipo != null) {
-		%>
-
-		<div class="mensaje <%=tipo%>"><%=mensaje%></div>
-		<%
-		session.removeAttribute("Error");
-		}
-		%>
-
-		<h2>Formulario Documento Maestro</h2>
-
-		<form action="DocumentoMaestroServlet" method="POST">
-
-			<label for="codigo">Código:</label><br> 
-			<input type="text" name="codigo" id="codigo" maxlength="45"
-				value="<%=(doc != null) ? doc.getCodigo() : ""%>"><br>
-			<br> <label for="nombre">Nombre:</label><br> 
-			<input type="text" name="nombre" id="nombre" maxlength="45"
-				value="<%=(doc != null) ? doc.getNombre() : ""%>"><br>
-			<br> <label for="tamanio">Tamaño:</label><br> 
-			<input type="text" name="tamanio" id="tamanio" maxlength="45"
-				value="<%=(doc != null) ? doc.getTamanio() : ""%>"><br>
-			<br> <label for="ruta">Ruta:</label><br> 
-			<input type="text" name="ruta" id="ruta" maxlength="200"
-				value="<%=(doc != null) ? doc.getRuta() : ""%>"><br>
-			<br> <label for="ext">Extensión:</label><br> 
-			<input type="text" name="ext" id="ext" maxlength="10"
-				value="<%=(doc != null) ? doc.getExt() : ""%>"><br> <br>
-				
-			<input type="submit" name="accion" value="Registrar"><br>
-
-			<label for="id">ID Maestro:</label><br> <input type="number"
-				name="id" value="<%=(doc != null) ? doc.getId() : ""%>"><br>
-			<br> 
-			<input type="submit" name="accion" value="Eliminar">
-			<input type="submit" name="accion" value="Actualizar"> 
-			<input type="submit" name="accion" value="Consultar">
-			<input type="submit" name="accion" value="Ver todos">
-
-            <a href="docMaestro.jsp">Maestros</a>
-		</form>
-
-		<%-- <form name="frmMaestros" action="DocumentoMaestroServlet"  method="POST">
-
-        <label for="codigo">Codigo del documento:</label><br>
-        <input type="text" name="codigo" id="codigo" maxlength="45" value="${consultar.codigo}"><br><br>
-
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" name="nombre" id="nombre" maxlength="45" value="${consultar.nombre}"><br><br>
-
-        <label for="tamanio">Tamaño del archivo:</label><br>
-        <input type="text" name="tamanio" id="tamanio" maxlength="45" value="${consultar.tamanio}"><br><br>
-
-        <label for="ruta">Ruta:</label><br>
-        <input type="text" name="ruta" id="ruta" maxlength="200" value="${consultar.ruta}"><br><br>
-
-        <label for="ext">Extension:</label><br>
-        <input type="text" name="ext" id="ext" maxlength="10" value="${consultar.ext}"><br><br>
-
-        <input type="submit" name="accion" value="Registrar">
-        <input type="reset" value="Limpiar"><br><br><br>
-
-
-        <label for="id">ID Maestro:</label><br>
-        <input type="number" name="id" value="id"><br><br>
-        <input type="submit" name="accion" value="eliminar">
-        <input type="submit" name="accion" value="actualizar">
-        <input type="submit" name="accion" value="consultar">
-        
-        </form>  --%>
-
-	</div>
-
-	<%
-	Properties lector = new Properties();
-	InputStream input = getClass().getClassLoader().getResourceAsStream("ejemplo.properties");
-
-	lector.load(input);
-	String Nombre = "", Apellido = "";
-
-	try {
-
-		Nombre = lector.getProperty("Nombre");
-		Apellido = lector.getProperty("Apellido");
-
-	} catch (Exception e) {
-		out.println("Error: " + e.getMessage());
-	}
-	%>
-	<div>
-
-	</div>
-
+</div>
 
 </body>
 </html>

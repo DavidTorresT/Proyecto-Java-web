@@ -129,6 +129,7 @@ background-color: #0056b3
 		}
 		%>
 
+<a href="index.jsp">Regresar</a>
 		<h2>Formulario Documento Maestro</h2>
 
 		<form action="DocumentoMaestroServlet" method="POST">
@@ -170,7 +171,7 @@ background-color: #0056b3
 	</div>
 	
 
-	<%
+	<% /*
 	Properties lector = new Properties();
 	InputStream input = getClass().getClassLoader().getResourceAsStream("ejemplo.properties");
 
@@ -185,18 +186,18 @@ background-color: #0056b3
 	} catch (Exception e) {
 		out.println("Error: " + e.getMessage());
 	}
-	%>
-	<div>
+	*/%>
+	<%--   <div>
 
 		<p>
 			Nombre:
-			<%=Nombre%></p>
+			<%=/*Nombre*/%></p>
 		<p>
 			Apellido:
-			<%=Apellido%></p>
+			<%=/*Apellido*/%></p>
 
 		
-	</div>
+	</div>--%>
 
 
 </body>

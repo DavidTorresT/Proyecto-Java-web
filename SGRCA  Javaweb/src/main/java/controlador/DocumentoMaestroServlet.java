@@ -247,7 +247,7 @@ public class DocumentoMaestroServlet extends HttpServlet {
         
         request.setAttribute("listaDocumentos", lista);
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("tabla.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("tablaDocMaestro.jsp");
         dispatcher.forward(request, response);
     }
     
